@@ -3,12 +3,15 @@ import Keys._
 
 object MinimalBuild extends Build {
   
-  lazy val buildVersion =  "2.1-09092012"
-  lazy val playVersion = "2.1-09092012"
+  lazy val buildVersion =  "2.1-SNAPSHOT"
+  lazy val playVersion = "2.1-SNAPSHOT"
   lazy val typesafeSnapshot = "Typesafe Snapshots Repository" at "http://repo.typesafe.com/typesafe/snapshots/"
   lazy val typesafe = "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
+  lazy val local = "Local Repository" at "file://"+Path.userHome.absolutePath+"/git/Play20/repository/local/"
   lazy val repo = if (buildVersion.endsWith("SNAPSHOT")) typesafeSnapshot else typesafe  
   
+println(local)
+
   lazy val play =  "play" %% "play" % playVersion % "provided"
 
 
@@ -20,6 +23,7 @@ object MinimalBuild extends Build {
                 else                                   Some("releases"  at nexus + "maven-releases/")
     },
     organization := "com.typesafe",
+    resolvers += local,
     resolvers += repo,
     javacOptions += "-Xlint:unchecked",
     libraryDependencies += play,
